@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SigmaAWS.NetCore2.API.Infrastucture;
 using SigmaAWS.NetCore2.Domain.Interfaces;
 using SigmaAWS.NetCore2.Domain.Models;
 
@@ -35,5 +36,22 @@ namespace SigmaAWS.NetCore2.API.Controllers
             }
         }
 
+
+        [HttpGet("{id}", Name = "GetStateRoute")]
+        [NoCache]
+        [ProducesResponseType(typeof(States), 200)]
+        public async Task<ActionResult> States(int id)
+        {
+            try
+            {
+                var state = await _stateRepository.GetStateAsync(id);
+                return Ok(state);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest();
+            }
+        }
     }
 }
