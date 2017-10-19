@@ -39,7 +39,7 @@ namespace SigmaAWS.NetCore2.DAL.Context
             {
                 entity.HasIndex(e => e.CustomerId);
 
-                entity.HasOne(d => d.Customer)
+                entity.HasOne(d => d.Customers)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId);
             });

@@ -25,7 +25,8 @@ namespace SigmaAWS.NetCore2.DAL.Repositories
         public async Task<List<Customers>> GetCustomersAsync()
         {
             var response = await _context.Customers.OrderBy(c => c.LastName)
-                                 //.Include(c => c.State)
+                                 .Include(c => c.State)
+                                 .Include(c => c.Orders)
                                  .ToListAsync();
             return response;
         }
@@ -50,9 +51,9 @@ namespace SigmaAWS.NetCore2.DAL.Repositories
                                  .SingleOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Customers> InsertCustomerAsync(Customers customer)
+        public async Task<Customers> InsertCustomerAsync(Customers customers)
         {
-            _context.Add(customer);
+            _context.Add(customers);
             try
             {
                 await _context.SaveChangesAsync();
@@ -62,14 +63,14 @@ namespace SigmaAWS.NetCore2.DAL.Repositories
                 _logger.LogError($"Error in {nameof(InsertCustomerAsync)}: " + exp.Message);
             }
 
-            return customer;
+            return customers;
         }
 
-        public async Task<bool> UpdateCustomerAsync(Customers customer)
+        public async Task<bool> UpdateCustomerAsync(Customers customers)
         {
-            //Will update all properties of the Customer
-            _context.Customers.Attach(customer);
-            _context.Entry(customer).State = EntityState.Modified;
+            //Will update all properties of the Customers
+            _context.Customers.Attach(customers);
+            _context.Entry(customers).State = EntityState.Modified;
             try
             {
                 return (await _context.SaveChangesAsync() > 0 ? true : false);
@@ -85,7 +86,7 @@ namespace SigmaAWS.NetCore2.DAL.Repositories
         {
             //Extra hop to the database but keeps it nice and simple for this demo
             //Including orders since there's a foreign-key constraint and we need
-            //to remove the orders in addition to the customer
+            //to remove the orders in addition to the customers
             var customer = await _context.Customers
                                 .Include(c => c.Orders)
                                 .SingleOrDefaultAsync(c => c.Id == id);

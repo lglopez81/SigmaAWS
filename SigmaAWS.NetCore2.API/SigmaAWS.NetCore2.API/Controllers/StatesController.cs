@@ -19,20 +19,21 @@ namespace SigmaAWS.NetCore2.API.Controllers
             _logger = loggerFactory.CreateLogger(nameof(StatesApiController));
         }
 
-        //[HttpGet]
-        //[ProducesResponseType(typeof(List<State>), 200)]
-        //public async Task<ActionResult> States() {
-        //    try
-        //    {
-        //        var states = await _stateRepository.GetStatesAsync();
-        //        return Ok(states);
-        //    }
-        //    catch (Exception exp)
-        //    {
-        //        _logger.LogError(exp.Message);
-        //        return BadRequest();
-        //    }
-        //}
+        [HttpGet]
+        [ProducesResponseType(typeof(List<States>), 200)]
+        public async Task<ActionResult> States()
+        {
+            try
+            {
+                var states = await _stateRepository.GetStatesAsync();
+                return Ok(states);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest();
+            }
+        }
 
     }
 }

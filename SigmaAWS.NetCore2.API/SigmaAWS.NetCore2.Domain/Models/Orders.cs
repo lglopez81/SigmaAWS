@@ -8,6 +8,6 @@
         public string Product { get; set; }
         public int Quantity { get; set; }
 
-        public Customers Customer { get; set; }
+        public Customers Customers { get; set; }
     }
 }

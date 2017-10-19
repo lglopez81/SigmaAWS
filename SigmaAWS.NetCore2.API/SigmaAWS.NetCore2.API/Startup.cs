@@ -35,15 +35,15 @@ namespace SigmaAWS.NetCore2.API
                 options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Customers;Trusted_Connection=True;");
             });
 
-            //Add SqLite support
-            //services.AddDbContext<CustomersContext>(options => {
-            //    options.UseSqlite(@"data source=C:\Users\lulo8295\Source\SigmaAWS\SigmaAWS.NetCore2.API\SigmaAWS.NetCore2.API\Data\Customer.sqlite");
+            ////Add SqLite support
+            //services.AddDbContext<CustomersContext>(options =>
+            //{
+            //    options.UseSqlite(@"data source=C:\Users\lulo8295\Source\SigmaAWS\SigmaAWS.NetCore2.API\SigmaAWS.NetCore2.API\Data\Customers.sqlite");
             //});
 
             services.AddMvc().AddJsonOptions(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
-            
 
             //Handle XSRF Name for Header
             services.AddAntiforgery(options => {
@@ -88,7 +88,7 @@ namespace SigmaAWS.NetCore2.API
                 options.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "ASP.NET Core Customer API",
+                    Title = "ASP.NET Core Customers API",
                     Description = "ASP.NET Core/Swagger Documentation",
                     TermsOfService = "None",
                     Contact = new Contact { Name = "SigmaITC", Url = "http://www.sigmaitc.se/sv/" },
